@@ -1,6 +1,6 @@
-# get_to_do
+# Note_To_Do
 
-A new Flutter project.
+A new Flutter Note taking and To DO App.
 
 ## Getting Started
 
