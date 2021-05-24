@@ -15,12 +15,15 @@ class TaskView extends GetView {
         init: TaskController(),
         builder: (_) {
           return _.tasks.isEmpty
-              ? Center(child: Text('Click " + " buttton to add New Task '))
+              ? Center(child: Text('Click " + " button to add New Task '))
               : RefreshIndicator(
                   onRefresh: () {
-                    return Future.delayed(Duration(milliseconds: 500), () {
-                      _.reloadTasks();
-                    });
+                    return Future.delayed(
+                      Duration(milliseconds: 500),
+                      () {
+                        _.reloadTasks();
+                      },
+                    );
                   },
                   child: ListView.builder(
                     itemCount: _.tasks.length,
@@ -47,36 +50,40 @@ class TaskView extends GetView {
                           ),
                         ),
                         key: UniqueKey(),
-                        child: Obx(() => Card(
-                              color: _.tasks[index].isDone == 1
-                                  ? Get.theme.canvasColor
-                                  : null,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.only(
-                                  topRight: Radius.circular(30),
-                                  bottomLeft: Radius.circular(30),
-                                  bottomRight: Radius.circular(30),
-                                ),
+                        child: Obx(
+                          () => Card(
+                            color: _.tasks[index].isDone == 1
+                                ? Get.theme.canvasColor
+                                : null,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(30),
+                                bottomLeft: Radius.circular(30),
+                                bottomRight: Radius.circular(30),
                               ),
-                              child: CheckboxListTile(
-                                value: _.tasks[index].isDone == 1 ? true : false,
-                                onChanged: (value) {
-                                  _.updateTask(Task(
+                            ),
+                            child: CheckboxListTile(
+                              value: _.tasks[index].isDone == 1 ? true : false,
+                              onChanged: (value) {
+                                _.updateTask(
+                                  Task(
                                     id: _.tasks[index].id,
                                     name: _.tasks[index].name,
                                     isDone: value! ? 1 : 0,
-                                  ));
-                                },
-                                title: Text(
-                                  _.tasks[index].name!,
-                                  style: TextStyle(
-                                    decoration: _.tasks[index].isDone == 1
-                                        ? TextDecoration.lineThrough
-                                        : null,
                                   ),
+                                );
+                              },
+                              title: Text(
+                                _.tasks[index].name!,
+                                style: TextStyle(
+                                  decoration: _.tasks[index].isDone == 1
+                                      ? TextDecoration.lineThrough
+                                      : null,
                                 ),
                               ),
-                            )),
+                            ),
+                          ),
+                        ),
                       );
                     },
                   ),
